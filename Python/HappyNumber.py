@@ -21,6 +21,8 @@ new number --> 25
 36 + 64
 100
 1
+
+12 -> 5 -> 25 -> 29 -> 85 -> 89 -> 136 -> 46 -> 52 -> 29
 """
 
 def isHappy(n: int) -> bool:
@@ -40,10 +42,20 @@ def isHappy(n: int) -> bool:
     
     # return False
 
-   """
-   while True:
-       
-   """
+    slow_num = n
+    fast_num = n
+
+    while slow_num != 1 and fast_num != 1:  # if this condition breaks, we found a happy number!
+        slow_num = squareDigits(slow_num)
+        fast_num = squareDigits(squareDigits(fast_num))
+
+        if slow_num == 1 or fast_num == 1:
+            return True
+
+        if slow_num == fast_num:
+            return False
+        
+    return True
 
 
 def squareDigits(n: int) -> int:
@@ -59,3 +71,4 @@ def squareDigits(n: int) -> int:
 
 print(isHappy(12))
 print(isHappy(19))
+print(isHappy(10))
