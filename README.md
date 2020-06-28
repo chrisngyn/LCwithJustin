@@ -1,3 +1,3 @@
 # LCwithJustin
 
- A group of computer science noobs just doing mock interviews with each other
+Justin is my friend and we do LeetCode + mock interviews with each other. 👍 
