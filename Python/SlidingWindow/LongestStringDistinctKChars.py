@@ -1,13 +1,13 @@
 """
-Given a string, find the length of the longest substring T that contains at most k distinct characters.
+Given a string, find the length of the longest substring 's' that contains at most k distinct characters.
 
 Input: s = "eceba", k = 2
 Output: 3
-Explanation: T is "ece" which its length is 3.
+Explanation: s is "ece" which its length is 3.
 
 Input: s = "aa", k = 1
 Output: 2
-Explanation: T is "aa" which its length is 2.
+Explanation: s is "aa" which its length is 2.
 
 
 PSEUDO CODE #1:
@@ -71,13 +71,87 @@ def function(s, k):
                 num_unique -= 1
             
             win_start += 1
+
+
+SUDO CODE #3
+
+what do we know?
+- always increase the window, and based on some conditional, determine if you should shrink the window or not
+- what is the condition we want to satisfy: the longest substring (length)
+- what condition will we continue to expand our window: if we're beneath K
+- if we are at K, what do we want to do: see if you can keep expanding without going over K & set return variable
+- if we are over K, what do we want to do: pop letters off until you're at K again
+- no DS O(n^2) <-- strings are immutable, dict O(n) time and space
+
+del letter_freq[key] <-- delete key in dict
+
+def function(s, k):
+    ret = 0
+    win_start = 0
+    letter_freq = {}
+
+    for index in range(len(s)):
+        char = s[index]
+
+        if char in letter_freq:
+            letter_freq[char] += 1
+        else:
+            letter_freq[char] = 1
+        
+        if len(letter_freq) == k:
+            ret = max(ret, (index - win_start + 1))
+
+        while len(letter_freq) > k:
+            if letter_freq[s[win_start]] > 1:
+                letter_freq[s[win_start]] -= 1
+            else:
+                del letter_freq[s[win_start]]
+            
+            win_start += 1
 """
 
+
 def lengthOfLongestSubstringKDistinct(s: str, k: int) -> int:
+    ret, win_start = 0, 0
+    letter_freq = {}  # if you had win_sum = '', appending to a string is like O(n) or some shit so use a dict instead
+
+    for index in range(len(s)):  # access the string by its indices, 'eceba' --> [0, 1, 2, 3, 4]
+        char = s[index]
+
+        # if char in letter_freq:  # always add to your window
+        #     letter_freq[char] += 1
+        # else:
+        #     letter_freq[char] = 1
+
+        if char not in letter_freq:
+            letter_freq[char] = 0
+        
+        letter_freq[char] += 1
+        
+        # if len(letter_freq) == k:  # case 1: you have K number of unique letters        <-- this is what happens when u dont read the question
+            # ret = max(ret, index - win_start + 1)
+        
+        while len(letter_freq) > k:  # case 2: you have more unique letters than K
+            # if (letter_freq[s[win_start]]) > 1:
+            #     letter_freq[s[win_start]] -= 1
+            # else:
+            #     del letter_freq[s[win_start]]
+
+            letter_freq[s[win_start]] -= 1  # alt way to do this too lol
+
+            if letter_freq[s[win_start]] == 0:
+                del letter_freq[s[win_start]]
+            
+            win_start += 1
+        
+        ret = max(ret, index - win_start + 1)  # at MOST 'k' distinct characters, you can have less, so just always check while not greater than
     
+    return ret
 
 
 test1 = "eceba"
-print(lengthOfLongestSubstringKDistinct(test1, 2))
+print(lengthOfLongestSubstringKDistinct(test1, 2))  # expect 3
 test2 = "aa"
-print(lengthOfLongestSubstringKDistinct(test2, 1))
+print(lengthOfLongestSubstringKDistinct(test2, 1))  # expect 2
+test3 = "a"
+print(lengthOfLongestSubstringKDistinct(test3, 2))  # expect 1
