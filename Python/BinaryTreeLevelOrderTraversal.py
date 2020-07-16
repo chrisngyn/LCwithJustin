@@ -68,8 +68,10 @@ def levelOrder(root: TreeNode) -> List[List[int]]:
         ret.append(queue)  #
         current_node = queue.popleft()
 
+    return ret
 
-    # return ret
+
+# Test case
 root = TreeNode(12)
 root.left = TreeNode(7)
 root.right = TreeNode(1)
