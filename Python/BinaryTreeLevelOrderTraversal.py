@@ -22,7 +22,6 @@ Approach:
 
 Use a queue. Queue 3, then queue 9, then 20, once 3 has no more children nodes to 'visit' we'll deque 3 and repeat with 9 and 20.
 
-
 from collections import deque
 def BFS(root):
     ret = []
@@ -48,34 +47,42 @@ alt:    row = []
             queue.popleft()
 """
 
-
 from collections import deque
 from typing import List
 
-# Definition for a binary tree node.
 class TreeNode:
     def __init__(self, val=0, left=None, right=None):
         self.val = val
         self.left = left
         self.right = right
 
-
 def levelOrder(root: TreeNode) -> List[List[int]]:
     ret = []
-    queue = deque([root])  # double ended queue
+    queue = deque([root])
 
     while len(queue) > 0:
-        ret.append(queue)  #
-        current_node = queue.popleft()
+        level_size = len(queue)  # get how many nodes belong on a level
+        current_level = []
+        
+        for index in range(level_size):
+            current_node = queue.popleft()
+            current_level.append(current_node.val)
+
+            if current_node.left != None:
+                queue.append(current_node.left)
+            
+            if current_node.right != None:
+                queue.append(current_node.right)
+            
+        ret.append(current_level)
 
     return ret
 
-
 # Test case
-root = TreeNode(12)
-root.left = TreeNode(7)
-root.right = TreeNode(1)
-root.left.left = TreeNode(9)
-root.right.left = TreeNode(10)
-root.right.right = TreeNode(5)
-levelOrder(root)
+root = TreeNode(3)
+root.left = TreeNode(9)
+root.right = TreeNode(20)
+root.right.left = TreeNode(15)
+root.right.right = TreeNode(7)
+res = levelOrder(root)
+print([i for i in res])
