@@ -37,7 +37,7 @@ def levelOrderBottom(root: TreeNode) -> List[List[int]]:
 
     while len(queue) > 0:
         current_level = []
-        num_nodes_in_next_level = len(queue)
+        num_nodes_in_next_level = len(queue)  # this will get the number of nodes that belong in the level, so you'll go thru this amount getting next levels nodes
 
         for _ in range(num_nodes_in_next_level):  # 1, [0]
             node = queue.popleft()
