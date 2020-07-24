@@ -1,4 +1,7 @@
+# BFS is a tree / graph traversal algorithm where you visit nodes level by level
+# Uses a queue. Put nodes in, pop once its out of children, repeat
 # Given a tree, print its node in Breadth First Search traversal.
+# Breadth First Search is generally done ITERATIVELY.
 # 3, 9, 20, 15, 7
 
 from collections import deque
