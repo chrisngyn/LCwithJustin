@@ -60,7 +60,7 @@ def pathSum(root: TreeNode, sum: int) -> bool:  # MUST be from ROOT to a LEAF. c
     if root == None:
         return False
     
-    if root.left and root.right and sum - root.val == 0:  # if the first two conditions are true, we're at a leaf. if the third condition is true, we're at 0!
+    if root.left == None and root.right == None and sum - root.val == 0:  # if the first two conditions are true, we're at a leaf. if the third condition is true, we're at 0!
         return True  # if you have FALSE or FALSE or FALSE or TRUE or FALSE or FALSE, it'll return TRUE.
     
     return pathSum(root.left, sum - root.val) or pathSum(root.right, sum - root.val)  # while you're not at a leaf, keep recursing down the tree
