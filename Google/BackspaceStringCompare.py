@@ -14,6 +14,8 @@ Explanation: Both S and T become "".
 Input: S = "a#c", T = "b"
 Output: false
 Explanation: S becomes "c" while T becomes "b".
+
+alt approach: traverse the string backwards. if we see a '#' keep a counter 'num_ignore' of the next number of characters to ignore
 """
 
 def backspaceStringCompare(S, T) -> bool:
