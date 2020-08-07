@@ -54,42 +54,45 @@ while nums[p1] == nums[p1+1] and p1 + 1 < len(nums):
 
 from typing import List
 
-def threeSum(nums: List[int]) -> List[List[int]]:
+def threeSum(nums: List[int]) -> List[List[int]]:  # time O(n^2) and space O(1)
     ret = []
 
     if len(nums) < 3:
         return []
 
-    nums.sort()
+    nums.sort()  # O(n log n)
 
-    p1 = 0
-    p2 = p1 + 1
-    p3 = len(nums) - 1
+    for p1 in range(len(nums)):  # O(n)
+        if (p1 > 0) and (nums[p1] == nums[p1 - 1]):  # skip this iteration, because p1 will be a duplicate value
+            continue
 
-    while p1 < p3:
-        val1 = nums[p1]
-        while p2 < p3:
-            val2 = nums[p2]
-            val3 = nums[p3]
-            sum = val1 + val2 + val3
-
-            if sum == 0:
-                # if ret.__contains__([val1, val2, val3]) == False:
-                ret.append([val1, val2, val3])
-                # p2 += 1
-
-                while nums[p2] == nums[p2 + 1] and p2 < len(nums) - 1:
-                    p2 += 1
-            elif sum > 0:
-                while nums[p3] == nums[p3 - 1] and p3 > 0:
-                    p3 -= 1
-            else:
-                while nums[p2] == nums[p2 + 1] and p2 < len(nums) - 1:
-                    p2 += 1
+        # if nums[p1] > 0:  # because you would never reach zero
+        #     break
         
-        p1 += 1
         p2 = p1 + 1
         p3 = len(nums) - 1
+        val1 = nums[p1]
+
+        while p2 < p3:  # O(n - 1) ~ O(n)
+            val2 = nums[p2]
+            val3 = nums[p3]
+            total = val1 + val2 + val3
+
+            if total == 0:
+                ret.append([val1, val2, val3])
+
+                while p2 < p3 and nums[p2] == nums[p2 + 1]:
+                    p2 += 1
+                p2 += 1
+
+                while p3 > p2 and nums[p3] == nums[p3 - 1]:
+                    p3 -= 1
+                p3 -= 1
+                
+            elif total > 0:
+                p3 -= 1
+            else:
+                p2 += 1
 
     return ret
 
